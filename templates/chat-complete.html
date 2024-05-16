@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Chat UI</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/styles.css">
+    <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+    <script>
+        htmx.on('htmx:beforeRequest', function(event) {
+            document.getElementById("chat-text").value = ""
+        });
+    </script>
+</head>
+<body>
+<div id="wanna-chat" class="container">
+    <div class="card">
+        <div class="card-header text-center"><span id="title">Chat ({{ count }})</span></div>
+        <ul id="chat-history" class="list-group list-group-flush">
+            {% for message in messages %}
+                {% include 'chat-message.html' with context %}
+            {% endfor %}
+        </ul>
+        <div class="card-body">
+            <form id="add-message-form" class="form-row align-items-center"
+                  hx-post="/chat"
+                  hx-disabled-elt="#chat-submit"
+                  hx-swap="beforeend scroll:bottom"
+                  hx-target="#chat-history"
+                  hx-indicator="#indicator"
+                  hx-trigger="submit">
+                <div class="col">
+                    <input id="chat-text" type="text" class="form-control mb-2" name="text" placeholder="Type a message..." required/>
+                </div>
+                <div class="col-auto">
+                    <button id="chat-submit" class="btn btn-primary mb-2" type="submit">Send</button>
+                </div>
+                <div class="col-auto">
+                    <img id="indicator" class="htmx-indicator mb-2" src="/static/three-dots.svg" alt="Loading..."/>
+                </div>
+
+                <input type="hidden" name="user" value=""/>
+                <script>
+                    // Set input field "user" to value of query parameter "user"
+                    document.querySelector('input[name="user"]').value =
+                        new URLSearchParams(window.location.search).get('user');
+                </script>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

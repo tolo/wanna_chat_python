@@ -1,0 +1,4 @@
+{% for message in messages %}
+{% include 'chat-message.html' with context %}
+{% endfor %}
+<div id="chat-count" hx-swap-oob="true">({{ count }} messages)</div>

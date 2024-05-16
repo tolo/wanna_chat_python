@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanna Chat (about htmx)?</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="static/styles.css">
+    <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+    <script>
+        htmx.on('htmx:beforeRequest', function(event) {
+            document.getElementById("chat-text").value = ""
+        });
+    </script>
+</head>
+<body>
+<div id="wanna-chat" class="container">
+    <div class="card">
+        <div class="card-header text-center">Wanna Chat (about htmx)?<div id="chat-count">({{ count }} messages)</div></div>
+        <ul id="chat-history" class="list-group list-group-flush">
+            {% for message in messages %}
+            {% include 'chat-message.html' with context %}
+            {% endfor %}
+        </ul>
+        <div class="card-body">
+            <form id="add-message-form" class="form-row align-items-center"
+                  hx-post="/chat"
+                  hx-disabled-elt="#chat-text,#chat-submit"
+                  hx-target="#chat-history"
+                  hx-swap="beforeend scroll:bottom"
+                  hx-indicator="#indicator"
+                  hx-trigger="submit">
+
+                <div class="col">
+                    <div class="input-group mb-1">
+                        <input id="chat-text" name="text" type="text" class="form-control" placeholder="Type a message..." aria-label="Chat message" aria-describedby="chat-submit">
+                        <div class="input-group-append">
+                            <button id="chat-submit" class="btn btn-outline-secondary" type="submit">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="indicator" class="col-auto htmx-indicator">
+                    <img class="mb-1" src="/static/three-dots.svg" alt="Loading..."/>
+                </div>
+
+                <!-- Hidden stuff -->
+                <input type="hidden" name="user" value=""/>
+                <script>
+                    // Set input field "user" to value of query parameter "user"
+                    document.querySelector('input[name="user"]').value =
+                        new URLSearchParams(window.location.search).get('user');
+                </script>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

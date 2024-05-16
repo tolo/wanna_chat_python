@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+body {
+    font-family: 'Lato', sans-serif;
+    background-color: #f2f2f7; /* Light grey background */
+}
+
+.container {
+    padding-top: 5vh; /* Adds some spacing at the top of the page */
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Adds shadow for depth */
+    overflow: hidden; /* Ensures the rounded corners are respected */
+}
+
+#chat-count {
+    font-size: 10px;
+    font-weight: normal;
+    font-style: italic;
+}
+
+#wanna-chat .card-header {
+    background: linear-gradient(to right, hotpink, purple, orange); /* Custom gradient header */
+    font-weight: bold;
+    color: white;
+    border-radius: 0.25rem 0.25rem 0 0; /* Rounded top corners */
+}
+
+.list-group {
+    height: 300px; /* Fixed height for chat messages area */
+    overflow-y: auto; /* Makes the chat area scrollable */
+    background-color: #fafafa; /* Different background for the list */
+}
+
+ul#chat-history {
+    padding-bottom: 30px;
+}
+
+ul#chat-history .list-group-item {
+    border-radius: 20px; /* Rounded corners for list items */
+    margin: 8px; /* Space around messages */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Shadow for each message */
+    border: none; /* Removes the default border */
+    max-width: 70%;
+}
+
+ul#chat-history .message-ai {
+    background: linear-gradient(to right, #dd2f85, purple);
+    color: white;
+}
+
+ul#chat-history .message-human {
+    background-color: #ef8200;
+    color: white;
+    margin-left: auto;
+    text-align: right;
+}
+
+.card-body {
+    padding: 20px; /* More padding for the input area */
+}
+
+form input.form-control {
+    _clip-path: inset(-10px 1px -10px -10px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Shadow for input and button */
+    border-radius: 18px; /* Rounded borders for input and button */
+    border-right: none;
+}
+
+form button#chat-submit {
+    border-radius: 0 18px 18px 0; /* Rounded corners on the right side of the button */
+    border: 1px solid #ced4da; /* Match Bootstrap's default input field border */
+    border-left: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Shadow for input and button */
+    background-color: #efefef;
+    color: darkviolet;
+    padding-right: 16px;
+}
+
+form button#chat-submit:hover {
+    background-color: hotpink;
+    color: white;
+    border-color: hotpink;
+}
+
+form button#chat-submit:disabled {
+    background-color: #ced4da;
+    color: gray;
+}
+
+
+/* HTMX */
+.htmx-indicator {
+    align-self: center;
+    display: none;
+}
+.htmx-indicator img {
+    width: 50px;
+}
+.htmx-request .htmx-indicator {
+    display: block;
+}
+.htmx-request.htmx-indicator {
+    display: block;
+}
